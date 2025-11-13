@@ -1,134 +1,72 @@
-# Enhanced Bash Configuration
+# 🐚 MyBash Integration
 
-## Overview
+This directory contains the Stow-compatible structure for the mybash configuration, sourced from the [mybash repository](https://github.com/dacrab/mybash).
 
-A comprehensive `.bashrc` configuration with modern terminal enhancements for Unix-like systems. This setup provides powerful aliases, custom functions, an enhanced prompt, and integrated tools to significantly improve your terminal productivity and experience.
+## 📁 Structure
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Uninstallation](#uninstallation)
-- [Configuration Files](#configuration-files)
-  - [.bashrc](#bashrc)
-  - [starship.toml](#starshiptoml)
-  - [config.jsonc](#configjsonc)
-- [Key Features](#key-features)
-- [Advanced Functions](#advanced-functions)
-- [System-Specific Configurations](#system-specific-configurations)
-- [Conclusion](#conclusion)
-
-## Installation
-
-To install the `.bashrc` configuration, execute the following commands in your terminal:
-
-```sh
-git clone --depth=1 https://github.com/dacrab/mybash.git
-cd mybash
-./setup.sh
+```
+mybash-stow/
+├── .bashrc              # Main bash configuration
+├── .config/
+│   └── starship/
+│       └── starship.toml # Starship prompt configuration
+└── README.md            # This file
 ```
 
-The `setup.sh` script automates the installation process by:
+## 🔧 Installation
 
-- Installing essential packages (bash-completion, bat, tree, neovim, fastfetch, etc.)
-- Installing modern terminal tools (starship prompt, fzf fuzzy finder, zoxide directory jumper)
-- Installing MesloLGS Nerd Font for enhanced prompt display
-- Linking configuration files (`.bashrc`, `starship.toml`, `config.jsonc`) to your home directory
-- Backing up existing configurations before making changes
+To install the mybash configuration:
 
-**Requirements:** Git, curl, and a supported package manager (apt, dnf, pacman, etc.)
+```bash
+# Install mybash configuration
+stow mybash-stow
 
-## Uninstallation
-
-To uninstall the `.bashrc` configuration, run:
-
-```sh
-cd mybash
-./uninstall.sh
+# Or install all dotfiles including mybash
+stow hypr hyprpanel rofi mybash-stow
 ```
 
-The `uninstall.sh` script reverses the installation by:
+## 🚀 Features
 
-- Removing installed packages and dependencies
-- Uninstalling MesloLGS Nerd Font
-- Removing symbolic links and restoring original configurations
-- Cleaning up external tools (starship, fzf, zoxide)
-- Restoring backed up `.bashrc` if available
+- **Custom bash configuration** with aliases, functions, and environment setup
+- **Starship prompt** for a modern, fast shell experience
+- Starship prompt configuration (static)
+- **Git integration** with the original mybash repository
+- **Stow compatibility** for easy management
 
-**Note:** Restart your shell after uninstallation to apply changes.
+## 🔄 Updating
 
-## Configuration Files
+To update the mybash configuration from the original repository:
 
-### `.bashrc`
+```bash
+# Update the submodule
+git submodule update --remote mybash
 
-Enhanced bash configuration with modern shell improvements:
+# Copy updated files to Stow structure
+cp mybash/.bashrc mybash-stow/
+cp mybash/starship.toml mybash-stow/.config/starship/
 
-- **Smart Aliases**: Safe defaults and productivity shortcuts (e.g., `cp='cp -i'`, `ll='ls -la'`)
-- **Custom Functions**: Archive extraction, file operations, system utilities
-- **History Management**: Improved history handling with deduplication
-- **Tool Integration**: Seamless integration with fzf, zoxide, and other modern tools
+# Commit changes
+git add .
+git commit -m "Update mybash configuration"
+```
 
-### `starship.toml`
+## 📚 Original Repository
 
-[Starship](https://starship.rs/) prompt configuration for a modern, informative shell prompt:
+The original mybash configuration is maintained in a separate repository:
+- **Repository**: [dacrab/mybash](https://github.com/dacrab/mybash)
+- **Purpose**: Independent bash configuration management
+- **Integration**: Added as git submodule to this dotfiles repo
 
-- **Clean Design**: Minimalist yet informative prompt layout
-- **Git Integration**: Branch status, commit info, and repository state
-- **Language Support**: Context-aware modules for Python, Node.js, Rust, Go, and more
-- **Performance**: Fast rendering with intelligent truncation
+## 🎨 Theming
 
-### `config.jsonc`
+Dynamic theming integration has been removed. The Starship prompt uses the provided `starship.toml` as-is.
 
-[Fastfetch](https://github.com/fastfetch-cli/fastfetch) system information display:
+## 🛠️ Customization
 
-- **System Overview**: CPU, GPU, memory, and storage information
-- **Customizable Layout**: Clean, organized system information display
-- **Logo Support**: Distro-specific ASCII art and branding
-- **Performance Metrics**: Quick system health overview
+To modify the bash configuration:
 
-## Key Features
+1. **Edit the original files** in the `mybash/` submodule directory
+2. **Copy changes** to the `mybash-stow/` directory
+3. **Commit both** the submodule and the Stow structure
 
-### Modern Terminal Tools
-- **Starship Prompt**: Fast, customizable prompt with git integration
-- **FZF**: Fuzzy finder for files, command history, and more
-- **Zoxide**: Smart directory jumping with frecency algorithm
-- **Bat**: Syntax-highlighted `cat` replacement
-- **Fastfetch**: System information display
-
-### Enhanced Shell Experience
-- **Smart Aliases**: Safer defaults and productivity shortcuts
-- **Custom Functions**: Archive handling, file operations, system utilities
-- **History Management**: Improved history with deduplication and search
-- **Color Support**: Enhanced readability with syntax highlighting
-
-### Safety and Productivity
-- **Safe Operations**: Confirmation prompts for destructive commands
-- **Trash Integration**: Use `trash` instead of `rm` for safer file deletion
-- **Editor Integration**: NeoVim as default with fallbacks
-- **Cross-Platform**: Works on major Linux distributions and package managers
-
-### System Integration
-- **Package Manager Detection**: Automatic detection of apt, dnf, pacman, etc.
-- **Font Installation**: Automatic Nerd Font setup for prompt icons
-- **Backup System**: Preserves existing configurations before changes
-
-## Supported Systems
-
-- **Arch Linux** (pacman, yay, paru)
-- **Debian/Ubuntu** (apt, nala)
-- **Fedora/RHEL** (dnf, yum)
-- **Gentoo** (emerge)
-- **Void Linux** (xbps-install)
-- **openSUSE** (zypper)
-- **NixOS** (nix-env)
-
-## Contributing
-
-Contributions are welcome! Please feel free to:
-- Report bugs or issues
-- Suggest new features or improvements
-- Submit pull requests
-- Share your customizations
-
-## License
-
-This project is open source. Feel free to use, modify, and distribute as needed.
+This approach maintains the separation of concerns while allowing integration with the main dotfiles repository.
