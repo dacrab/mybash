@@ -1,13 +1,38 @@
+This is the modified Starship configuration using a simple, dark Everforest color palette.
+
+I've used the following Everforest colors:
+
+#2B333F: Dark Hard Background (for Python/Username)
+
+#39424C: Dark Medium Background (for Directory)
+
+#434C5E: Dark Soft Background (for Git)
+
+#7FDDD3: Dark Blue Accent (for Python environment and Time background)
+
+#D3C6AA: Dark Foreground (default text color)
+
+#D2E79B: Dark Yellow/Green (for Git branch)
+
+#8CCF72: Dark Green (for Git status)
+
+#E67E50: Dark Orange/Red (for Root user background)
+
+code
+Toml
+download
+content_copy
+expand_less
 format = """
-[](#3B4252)\
+[](#2B333F)\
 $python$username\
-[](bg:#434C5E fg:#3B4252)\
+[](bg:#39424C fg:#2B333F)\
 $directory\
-[](fg:#434C5E bg:#4C566A)\
+[](fg:#39424C bg:#434C5E)\
 $git_branch$git_status\
-[](fg:#4C566A bg:#33658A)\
+[](fg:#434C5E bg:#7FDDD3)\
 $time\
-[ ](fg:#33658A)\
+[ ](fg:#7FDDD3)\
 """
 command_timeout = 1200
 add_newline = false
@@ -15,12 +40,15 @@ add_newline = false
 # You can also replace your username with a neat symbol like  to save some space
 [username]
 show_always = true
-style_user = "bg:#3B4252"
-style_root = "bg:#3B4252"
-format = '[$user ]($style)'
+# User: Dark Hard BG (#2B333F), Dark Foreground (#D3C6AA)
+style_user = "bg:#2B333F fg:#D3C6AA"
+# Root: Dark Red/Orange BG (#E67E50), Dark Hard BG FG (#2B333F)
+style_root = "bg:#E67E50 fg:#2B333F"
+format = '[ $user ]($style)'
 
 [directory]
-style = "bg:#434C5E"
+# Directory: Dark Medium BG (#39424C), Dark Foreground (#D3C6AA)
+style = "bg:#39424C fg:#D3C6AA"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -48,11 +76,13 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:#4C566A"
+# Git Branch: Dark Soft BG (#434C5E), Dark Yellow/Green (#D2E79B)
+style = "bg:#434C5E fg:#D2E79B"
 format = '[ $symbol $branch ]($style)'
 
 [git_status]
-style = "bg:#4C566A"
+# Git Status: Dark Soft BG (#434C5E), Dark Green (#8CCF72)
+style = "bg:#434C5E fg:#8CCF72"
 format = '[$all_status$ahead_behind ]($style)'
 
  
@@ -68,7 +98,8 @@ format = '[$all_status$ahead_behind ]($style)'
  
 
 [python]
-style = "bg:#3B4252"
+# Python: Dark Hard BG (#2B333F), Dark Blue Accent (#7FDDD3)
+style = "bg:#2B333F fg:#7FDDD3"
 format = '[(\($virtualenv\) )]($style)'
 
  
@@ -76,5 +107,6 @@ format = '[(\($virtualenv\) )]($style)'
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-style = "bg:#33658A"
+# Time: Dark Blue Accent BG (#7FDDD3), Dark Hard BG FG (#2B333F)
+style = "bg:#7FDDD3 fg:#2B333F"
 format = '[ $time ]($style)'
