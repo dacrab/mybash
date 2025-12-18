@@ -1,117 +1,72 @@
-# 🐚 mybash
+# 🐚 MyBash Integration
 
-Opinionated Bash setup with a Nord‑themed Starship prompt, sensible defaults, and a bunch of productivity aliases and functions.
+This directory contains the Stow-compatible structure for the mybash configuration, sourced from the [mybash repository](https://github.com/dacrab/mybash).
 
-This repo is the **source of truth** for your Bash config. It is also used by the `mybash-stow` package in [`dacrab/dotfiles`](https://github.com/dacrab/dotfiles), but it can be used completely standalone.
-
----
-
-## ✨ Features
-
-- **Interactive‑only config** – exits early for non‑interactive shells
-- **Smart `ls` / directory navigation**
-  - Uses `eza`, `exa`, or `lsd` when available, falls back to `ls`
-  - Overrides `cd` to automatically list the target directory
-  - Handy helpers: `mkcd`, `up`, `search_files`
-- **History + quality‑of‑life tweaks**
-  - Large history with timestamps
-  - No duplicate / leading‑space commands
-  - sane readline, disabled terminal bell, `stty -ixon`
-- **Git shortcuts** – `g`, `gs`, `gc`, `gp`, `ggraph`, `gclean`, `lazy "msg"`, etc.
-- **Package manager aliases** – automatically pick `dnf`, `apt`, or `pacman` based on distro
-- **Developer tooling** – `nvim` as default editor, Docker and Python helpers, quick HTTP server
-- **Network helpers** – `myip`, `iplocal`, `ippublic`
-- **Prompt** – [Starship](https://starship.rs) config with Nord palette and git/status segments
-
----
-
-## 📁 Layout
+## 📁 Structure
 
 ```
-mybash/
-├── .bashrc                     # Main Bash configuration
-└── .config/
-    └── starship/
-        └── starship.toml       # Starship prompt configuration
+mybash-stow/
+├── .bashrc              # Main bash configuration
+├── .config/
+│   └── starship/
+│       └── starship.toml # Starship prompt configuration
+└── README.md            # This file
 ```
 
----
+## 🔧 Installation
 
-## 🚀 Getting started
+To install the mybash configuration:
 
-> These steps assume you want to manage your Bash config from this repo directly.
+```bash
+# Install mybash configuration
+stow mybash-stow
 
-1. **Clone the repo**
+# Or install all dotfiles including mybash
+stow hypr hyprpanel rofi mybash-stow
+```
 
-   ```bash
-   git clone https://github.com/dacrab/mybash.git ~/mybash
-   cd ~/mybash
-   ```
+## 🚀 Features
 
-2. **Point Bash at this `.bashrc`** (symlink recommended)
-
-   ```bash
-   ln -sf "$HOME/mybash/.bashrc" "$HOME/.bashrc"
-   ```
-
-3. **Set up Starship config (optional but recommended)**
-
-   ```bash
-   mkdir -p "$HOME/.config/starship"
-   ln -sf "$HOME/mybash/.config/starship/starship.toml" \
-     "$HOME/.config/starship/starship.toml"
-   ```
-
-4. **Install recommended tools** (as needed)
-
-   - [`starship`](https://starship.rs)
-   - [`zoxide`](https://github.com/ajeetdsouza/zoxide)
-   - One of: `eza`, `exa`, or `lsd`
-   - `fastfetch` for the startup system info (optional)
-
-5. **Start a new shell**
-
-   ```bash
-   exec bash
-   ```
-
-You should now see the Starship prompt and have all aliases/functions available.
-
----
+- **Custom bash configuration** with aliases, functions, and environment setup
+- **Starship prompt** for a modern, fast shell experience
+- Starship prompt configuration (static)
+- **Git integration** with the original mybash repository
+- **Stow compatibility** for easy management
 
 ## 🔄 Updating
 
-To pull in the latest changes from this repo:
+To update the mybash configuration from the original repository:
 
 ```bash
-cd ~/mybash
-git pull
-exec bash  # or `source ~/.bashrc`
+# Update the submodule
+git submodule update --remote mybash
+
+# Copy updated files to Stow structure
+cp mybash/.bashrc mybash-stow/
+cp mybash/starship.toml mybash-stow/.config/starship/
+
+# Commit changes
+git add .
+git commit -m "Update mybash configuration"
 ```
 
-If you're using `mybash` via the `mybash-stow` package in `dacrab/dotfiles`, keep following the sync workflow defined there; this repo is the upstream.
+## 📚 Original Repository
 
----
+The original mybash configuration is maintained in a separate repository:
+- **Repository**: [dacrab/mybash](https://github.com/dacrab/mybash)
+- **Purpose**: Independent bash configuration management
+- **Integration**: Added as git submodule to this dotfiles repo
 
-## 🛠 Customization
+## 🎨 Theming
 
-You can safely tweak any of the following:
+Dynamic theming integration has been removed. The Starship prompt uses the provided `starship.toml` as-is.
 
-- **Aliases / functions** – adjust or remove ones you don't use in `.bashrc`
-- **Prompt** – edit `.config/starship/starship.toml` to change colors, segments, or layout
-- **PATH / tools** – add language toolchains or CLIs you use often
+## 🛠️ Customization
 
-If you break something, you can always reset to the latest version:
+To modify the bash configuration:
 
-```bash
-cd ~/mybash
-git restore .
-```
+1. **Edit the original files** in the `mybash/` submodule directory
+2. **Copy changes** to the `mybash-stow/` directory
+3. **Commit both** the submodule and the Stow structure
 
----
-
-## 📚 Related
-
-- Dotfiles repo that consumes this config: [`dacrab/dotfiles`](https://github.com/dacrab/dotfiles)
-- Starship docs: https://starship.rs/config/
-- Bash manual: https://www.gnu.org/software/bash/manual/bash.html
+This approach maintains the separation of concerns while allowing integration with the main dotfiles repository.

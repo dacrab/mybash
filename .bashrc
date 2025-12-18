@@ -54,6 +54,10 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 # PATH
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.composer/vendor/bin:$HOME/.config/herd-lite/bin:$HOME/.spicetify:$PATH"
 
+# bun
+export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 # PHP
 export PHP_INI_SCAN_DIR="$HOME/.config/herd-lite/bin:${PHP_INI_SCAN_DIR:-}"
 
@@ -230,15 +234,15 @@ DISTRO=$(get_distro)
 case "$DISTRO" in
   debian)
     alias install='sudo apt install'
-    alias update='sudo apt update && sudo apt full-upgrade'
+    alias update='sudo apt update && sudo apt full-upgrade && flatpak update'
     alias search='apt search'
-    alias remove='sudo apt remove'
+    alias remove='sudo apt remove && sudo apt autoremove'
     ;;
   redhat)
     alias install='sudo dnf install'
-    alias update='sudo dnf upgrade --refresh'
+    alias update='sudo dnf upgrade --refresh && flatpak update'
     alias search='dnf search'
-    alias remove='sudo dnf remove'
+    alias remove='sudo dnf remove && sudo dnf autoremove'
     ;;
   arch)
     alias install='sudo pacman -S'
@@ -287,6 +291,7 @@ alias servep='python3 -m http.server 8000 --bind 127.0.0.1'
 
 # Custom
 alias cursor-reset='cd ~/Documents/GitHub/cursor-reset && ./cursor-reset.sh'
+alias gemini='npx https://github.com/google-gemini/gemini-cli -y'
 
 #################### KEYBINDINGS ####################
 bind '"\C-f":"zi\n"' 2>/dev/null
@@ -304,3 +309,5 @@ fi
 [[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 [[ -f "$HOME/.deno/env" ]] && . "$HOME/.deno/env"
+
+export PATH=$PATH:/home/dacrab/.spicetify
