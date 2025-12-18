@@ -311,3 +311,4 @@ fi
 [[ -f "$HOME/.deno/env" ]] && . "$HOME/.deno/env"
 
 export PATH=$PATH:/home/dacrab/.spicetify
+alias sweep='bash /home/dacrab/dotfiles/scripts-stow/cleanup_storage.sh'
