@@ -51,6 +51,20 @@ export LESS_TERMCAP_us=$'\e[1;32m'
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
+# Colored Man Pages (using bat)
+if command -v bat >/dev/null 2>&1; then
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
+
+# Clipboard Aliases
+if command -v wl-copy >/dev/null 2>&1; then
+    alias copy='wl-copy'
+    alias paste='wl-paste'
+elif command -v xclip >/dev/null 2>&1; then
+    alias copy='xclip -selection clipboard'
+    alias paste='xclip -selection clipboard -o'
+fi
+
 # PATH
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.composer/vendor/bin:$HOME/.config/herd-lite/bin:$HOME/.spicetify:$PATH"
 
@@ -161,6 +175,39 @@ iplocal() { hostname -I | awk '{print $1}'; }
 cheat() {
   curl -s "cht.sh/$1"
 }
+
+# FZF Powered Functions
+if command -v fzf >/dev/null 2>&1; then
+    # Open file in editor
+    fe() {
+        local file
+        file=$(fd --type f --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0)
+        [[ -n "$file" ]] && ${EDITOR:-nvim} "$file"
+    }
+
+    # CD into directory
+    fcd() {
+        local dir
+        dir=$(fd --type d --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0)
+        [[ -n "$dir" ]] && cd "$dir"
+    }
+
+    # Kill process
+    fkill() {
+        local pid
+        pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+        if [[ -n "$pid" ]]; then
+            echo "$pid" | xargs kill -"${1:-9}"
+        fi
+    }
+    
+    # Preview file with bat
+    fshow() {
+        local file
+        file=$(fd --type f --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0 --preview "bat --color=always --style=numbers --line-range=:500 {}")
+        [[ -n "$file" ]] && bat "$file"
+    }
+fi
 
 gclean() {
   git fetch -p
@@ -281,6 +328,9 @@ alias gst='git status -sb'
 alias gco='git checkout'
 alias gb='git branch --all'
 alias gamend='git commit --amend --no-edit'
+alias gca='git commit --amend'
+alias gcp='git cherry-pick'
+alias gprune='git fetch --prune'
 alias guncommit='git reset --soft HEAD~1'
 
 # Docker
@@ -293,6 +343,7 @@ alias dcu='docker compose up -d'
 alias dcd='docker compose down'
 alias dcb='docker compose build'
 alias dcl='docker compose logs -f'
+alias dexec='docker exec -it'
 
 # Networking
 alias ping='ping -c 5'
@@ -326,5 +377,5 @@ fi
 [[ -f "$HOME/.deno/env" ]] && . "$HOME/.deno/env"
 
 # Final Aliases
-alias sweep='bash /home/dacrab/dotfiles/scripts-stow/cleanup_storage.sh'
+alias sweep='bash "$HOME/dotfiles/scripts-stow/cleanup_storage.sh"'
 alias weather='curl -s "wttr.in?m"'
