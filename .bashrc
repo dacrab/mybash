@@ -54,6 +54,13 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 # PATH
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.composer/vendor/bin:$HOME/.config/herd-lite/bin:$HOME/.spicetify:$PATH"
 
+# FZF Integration
+if [[ -f "$HOME/.fzf.bash" ]]; then
+    source "$HOME/.fzf.bash"
+    export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
 # bun
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -124,6 +131,8 @@ extract() {
 
 mkcd() { mkdir -p "$1" && cd "$1" || return; }
 
+bak() { cp -r "$1" "$1.bak"; }
+
 up() {
   local levels=${1:-1} path=""
   for ((i=0; i<levels; i++)); do path="../$path"; done
@@ -148,6 +157,10 @@ myip() {
 gcom() { git add . && git commit -m "$1"; }
 lazy() { git add . && git commit -m "$1" && git push; }
 iplocal() { hostname -I | awk '{print $1}'; }
+
+cheat() {
+  curl -s "cht.sh/$1"
+}
 
 gclean() {
   git fetch -p
@@ -209,7 +222,7 @@ fi
 alias tree='tree -C'
 
 # Text/IO
-alias grep='grep --color=auto'
+alias grep='grep --color=auto --exclude-dir={.git,node_modules,vendor,build,dist}'
 command -v bat >/dev/null 2>&1 && alias cat='bat'
 
 # Archives
@@ -267,6 +280,8 @@ alias ggraph='git log --graph --decorate --oneline --all'
 alias gst='git status -sb'
 alias gco='git checkout'
 alias gb='git branch --all'
+alias gamend='git commit --amend --no-edit'
+alias guncommit='git reset --soft HEAD~1'
 
 # Docker
 alias d='docker'
@@ -310,5 +325,6 @@ fi
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 [[ -f "$HOME/.deno/env" ]] && . "$HOME/.deno/env"
 
-export PATH=$PATH:/home/dacrab/.spicetify
+# Final Aliases
 alias sweep='bash /home/dacrab/dotfiles/scripts-stow/cleanup_storage.sh'
+alias weather='curl -s "wttr.in?m"'
