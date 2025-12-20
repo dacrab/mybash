@@ -377,5 +377,6 @@ fi
 [[ -f "$HOME/.deno/env" ]] && . "$HOME/.deno/env"
 
 # Final Aliases
-alias sweep='bash "$HOME/dotfiles/scripts-stow/cleanup_storage.sh"'
+alias sweep='bash "$HOME/.local/bin/cleanup_storage.sh"'
+alias wall='bash "$HOME/.local/bin/random-wall.sh"'
 alias weather='curl -s "wttr.in?m"'
