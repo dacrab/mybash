@@ -357,7 +357,7 @@ alias servep='python3 -m http.server 8000 --bind 127.0.0.1'
 
 # Custom
 alias cursor-reset='cd ~/Documents/GitHub/cursor-reset && ./cursor-reset.sh'
-alias gemini='npx https://github.com/google-gemini/gemini-cli -y'
+alias gemini='npx -y github:google-gemini/gemini-cli'
 
 #################### KEYBINDINGS ####################
 bind '"\C-f":"zi\n"' 2>/dev/null
