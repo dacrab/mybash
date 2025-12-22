@@ -200,7 +200,7 @@ if command -v fzf >/dev/null 2>&1; then
             echo "$pid" | xargs kill -"${1:-9}"
         fi
     }
-    
+
     # Preview file with bat
     fshow() {
         local file
