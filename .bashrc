@@ -380,3 +380,6 @@ fi
 alias sweep='bash "$HOME/.local/bin/cleanup_storage.sh"'
 alias wall='bash "$HOME/.local/bin/random-wall.sh"'
 alias weather='curl -s "wttr.in?m"'
+
+# Deno completion
+[[ -f "$HOME/.local/share/bash-completion/completions/deno.bash" ]] && source "$HOME/.local/share/bash-completion/completions/deno.bash"
