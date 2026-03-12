@@ -29,7 +29,9 @@ export HISTSIZE=10000
 export HISTFILESIZE=20000
 export HISTTIMEFORMAT="%F %T "
 export HISTCONTROL="erasedups:ignoredups:ignorespace"
-export PROMPT_COMMAND="history -a"
+# SC2178: PROMPT_COMMAND is intentionally a string here, not an array
+# shellcheck disable=SC2178
+PROMPT_COMMAND="history -a"
 
 #################### ENV ####################
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -189,7 +191,7 @@ if command -v fzf >/dev/null 2>&1; then
     fcd() {
         local dir
         dir=$(fd --type d --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0)
-        [[ -n "$dir" ]] && cd "$dir"
+        [[ -n "$dir" ]] && cd "$dir" || return
     }
 
     # Kill process
@@ -294,23 +296,22 @@ DISTRO=$(get_distro)
 case "$DISTRO" in
   debian)
     alias install='sudo apt install'
-    alias update='sudo apt update && sudo apt full-upgrade && flatpak update'
     alias search='apt search'
     alias remove='sudo apt remove && sudo apt autoremove'
     ;;
   redhat)
     alias install='sudo dnf install'
-    alias update='sudo dnf upgrade --refresh && flatpak update'
     alias search='dnf search'
     alias remove='sudo dnf remove && sudo dnf autoremove'
     ;;
   arch)
     alias install='sudo pacman -S'
-    alias update='sudo pacman -Syu'
     alias search='pacman -Ss'
     alias remove='sudo pacman -R'
     ;;
 esac
+
+alias update='bash "$HOME/.local/bin/update.sh"'
 
 # Dev
 alias vim='nvim'
@@ -374,12 +375,12 @@ fi
 #################### EXTERNAL ####################
 [[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
-[[ -f "$HOME/.deno/env" ]] && . "$HOME/.deno/env"
-
 # Final Aliases
 alias sweep='bash "$HOME/.local/bin/cleanup_storage.sh"'
 alias wall='bash "$HOME/.local/bin/random-wall.sh"'
 alias weather='curl -s "wttr.in?m"'
 
-# Deno completion
-[[ -f "$HOME/.local/share/bash-completion/completions/deno.bash" ]] && source "$HOME/.local/share/bash-completion/completions/deno.bash"
+export PATH="$HOME/.local/bin:$PATH"
+
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
