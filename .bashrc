@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 [[ $- != *i* ]] && return
 
+has() { command -v "$1" &>/dev/null; }
+
 [[ -f /etc/bashrc ]] && source /etc/bashrc
 [[ -f /usr/share/bash-completion/bash_completion ]] && source /usr/share/bash-completion/bash_completion
 
@@ -20,7 +22,7 @@ export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
 export EDITOR="nvim" VISUAL="nvim"
-command -v bat &>/dev/null && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+has bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export PATH="$HOME/.local/bin:$PATH"
 [[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
@@ -32,9 +34,9 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
 [[ -f "$HOME/.fzf.bash" ]] && source "$HOME/.fzf.bash" && export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
 
-has() { command -v "$1" &>/dev/null; }
+has fastfetch && fastfetch
 
-command -v wl-copy &>/dev/null && alias copy='wl-copy' && alias paste='wl-paste'
+has wl-copy && alias copy='wl-copy' && alias paste='wl-paste'
 
 alias ls='eza -a -1 --icons --group-directories-first'
 alias l='eza -1 --icons --group-directories-first'
