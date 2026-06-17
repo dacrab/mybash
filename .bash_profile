@@ -11,8 +11,5 @@ if [[ -n $BASH && $- == *i* && -f "$HOME/.bashrc" ]]; then
   . "$HOME/.bashrc"
 fi
 
-
-# Added by Antigravity CLI installer
-export PATH="/home/dacrab/.local/bin:$PATH"
-
-export PATH=$PATH:/home/dacrab/.spicetify
+# PATH additions for non-interactive login shells (duplicates in .bashrc are harmless)
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"

@@ -150,8 +150,8 @@ mkcd() { mkdir -p "$1" && cd "$1" || return; }
 bak() { cp -r "$1" "$1.bak"; }
 
 up() {
-  local levels=${1:-1} path=""
-  for ((i=0; i<levels; i++)); do path="../$path"; done
+  local levels=${1:-1} path="."
+  for ((i=0; i<levels; i++)); do path="$path/.."; done
   cd "$path" || return
 }
 
@@ -256,9 +256,12 @@ alias please='sudo $(fc -ln -1)'
 # File operations
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='rm -i'
 alias mkdir='mkdir -pv'
-command -v trash >/dev/null 2>&1 && alias rm='trash'
+if command -v trash >/dev/null 2>&1; then
+  alias rm='trash'
+else
+  alias rm='rm -i'
+fi
 
 # Listing (eza/lsd/ls)
 if command -v eza >/dev/null 2>&1; then
@@ -392,9 +395,4 @@ fi
 
 [[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
-
-
-# Added by Antigravity CLI installer
-export PATH="$HOME/.local/bin:$PATH"
-
-export PATH=$PATH:$HOME/.spicetify
+[[ -d "$HOME/.mimocode/bin" ]] && export PATH="$HOME/.mimocode/bin:$PATH"
