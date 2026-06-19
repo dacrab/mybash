@@ -12,7 +12,6 @@ format = """
 command_timeout = 1200
 add_newline = false
 
-# You can also replace your username with a neat symbol like  to save some space
 [username]
 show_always = true
 # User: Nord Dark BG (#2E3440), Snow (#D8DEE9)
@@ -28,22 +27,12 @@ format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
-# Here is how you can shorten some long paths by text replacement
-# similar to mapped_locations in Oh My Posh:
 [directory.substitutions]
 "Documents" = "󰈙 "
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
-# Keep in mind that the order matters. For example:
-# "Important Documents" = "  "
-# will not be replaced, because "Documents" was already substituted before.
-# So either put "Important Documents" before "Documents" or use the substituted version:
-# "Important  " = "  "
-
-
-
-
+# Order matters: substitute longer paths first to avoid partial matches
 
 [git_branch]
 symbol = ""
@@ -56,24 +45,10 @@ format = '[ $symbol $branch ]($style)'
 style = "bg:#434C5E fg:#A3BE8C"
 format = '[$all_status$ahead_behind ]($style)'
 
-
-
-
-
-
-
-
 [python]
 # Python: Nord Dark BG (#2E3440), Frost (#8FBCBB)
 style = "bg:#2E3440 fg:#8FBCBB"
 format = '[(\($virtualenv\) )]($style)'
-
-
-
-
-
-
-
 
 [time]
 disabled = false
