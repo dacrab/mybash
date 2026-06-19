@@ -38,10 +38,12 @@ has fastfetch && fastfetch
 
 has wl-copy && alias copy='wl-copy' && alias paste='wl-paste'
 
-alias ls='eza -a -1 --icons --group-directories-first'
-alias l='eza -1 --icons --group-directories-first'
-alias ll='eza -l --icons --group-directories-first --no-user --no-group --no-permissions --no-filesize --time=modified --time-style="%Y-%m-%d %H:%M"'
-alias lt='eza -T --level=2 --icons --group-directories-first'
+has eza && {
+  alias ls='eza -a -1 --icons --group-directories-first'
+  alias l='eza -1 --icons --group-directories-first'
+  alias ll='eza -l --icons --group-directories-first --no-user --no-group --no-permissions --no-filesize --time=modified --time-style="%Y-%m-%d %H:%M"'
+  alias lt='eza -T --level=2 --icons --group-directories-first'
+}
 has bat && alias cat='bat'
 alias grep='grep --color=auto --exclude-dir={.git,node_modules,vendor,build,dist}'
 alias ..='cd ..'
@@ -56,8 +58,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 has trash && alias rm='trash' || alias rm='rm -i'
 alias mkdir='mkdir -pv'
-alias vim='nvim'
-alias vi='nvim'
+has nvim && { alias vim='nvim'; alias vi='nvim'; }
 alias tree='tree -C'
 alias untar='tar -xvf'
 alias targz='tar -czvf'
@@ -115,8 +116,6 @@ if has fzf && has fd; then
   fkill(){ local p; p=$(ps -ef | sed 1d | fzf -m | awk '{print $2}') && echo "$p" | xargs kill -"${1:-9}"; }
   fshow(){ local f; f=$(fd --type f --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0 --preview "bat --color=always --style=numbers --line-range=:500 {}") && bat "$f"; }
 fi
-
-bind '"\C-f":"zi\n"' 2>/dev/null
 
 has starship && eval "$(starship init bash)"
 has zoxide && eval "$(zoxide init bash)"
