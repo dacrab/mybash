@@ -103,7 +103,7 @@ alias dcl='docker compose logs -f'
 alias dexec='docker exec -it'
 
 alias update='bash "$HOME/.local/bin/update.sh"'
-alias sweep='bash "$HOME/.local/bin/cleanup_storage.sh"'
+alias sweep='bash "$HOME/.local/bin/sweep.sh"'
 alias wall='bash "$HOME/.local/bin/random-wall.sh"'
 
 gcom() { git add . && git commit -m "$1"; }
