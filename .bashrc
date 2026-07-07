@@ -29,6 +29,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
+[[ -d "$HOME/.spicetify" ]] && export PATH="$HOME/.spicetify:$PATH"
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
@@ -120,5 +121,6 @@ fi
 has starship && eval "$(starship init bash)"
 has zoxide && eval "$(zoxide init bash)"
 
-[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+alias stripe='docker run --rm -it -v "$HOME/.config/stripe:/root/.config/stripe" -v "$HOME/.stripe:/root/.stripe" stripe/stripe-cli:latest'
