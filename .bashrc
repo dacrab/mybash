@@ -65,6 +65,8 @@ alias c='clear'
 alias h='history'
 alias path='echo -e "${PATH//:/\\n}"'
 alias reload='source ~/.bashrc'
+alias eb='$EDITOR ~/dotfiles/mybash/.bashrc'
+alias eg='$EDITOR ~/dotfiles/git-stow/.gitconfig'
 alias dot='cd ~/dotfiles'
 alias dev='cd ~/Documents/GitHub'
 
@@ -96,9 +98,12 @@ alias shutdown='systemctl poweroff'
 alias reboot='systemctl reboot'
 alias sc='systemctl'
 alias jc='journalctl'
+alias py='python3'
+alias diff='diff --color=auto'
 
 # ===== Aliases: Network =====
 has ss && alias ports='ss -tulpen'
+alias ip='ip -c'
 alias ping='ping -c 5'
 alias wget='wget -c'
 alias curl='curl -L'
@@ -167,6 +172,7 @@ has supabase && {
 gcom()  { git add . && git commit -m "$1"; }
 lazy()  { git add . && git commit -m "$1" && git push; }
 gclean(){ git fetch -p && git branch --merged | grep -E -v '(^\*|main|master|dev)' | xargs -r git branch -d; }
+fbr()   { git branch -a --format '%(refname:short)' | fzf | xargs git checkout; }
 
 # ===== Functions: Project =====
 cleanb(){ rm -rf .next .astro .svelte-kit node_modules/.cache kiro-cli 2>/dev/null; echo "build artifacts removed"; }
