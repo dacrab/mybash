@@ -86,7 +86,7 @@ has dust   && alias du='dust'   || alias du='du -h'
 alias free='free -h'
 has procs  && alias ps='procs'  || alias ps='ps auxf'
 alias psg='ps aux | grep'
-has rg     && alias rg='rg -S'
+has kiro-cli && alias k='kiro-cli'
 has btm    && alias top='btm' || has htop && alias top='htop'
 has doggo  && alias dig='doggo'
 has tldr   && alias help='tldr'
@@ -113,6 +113,7 @@ alias gst='git status -sb'
 alias ga='git add'
 alias gc='git commit'
 alias gp='git push'
+alias gpl='git pull'
 alias gl='git log --oneline'
 alias gd='git diff'
 alias gco='git checkout'
@@ -156,10 +157,19 @@ has bun && {
   alias nr='npm run'
 }
 
+# ===== Aliases: Supabase =====
+has supabase && {
+  alias supau='supabase start'
+  alias supad='supabase stop --all'
+}
+
 # ===== Functions: Git =====
 gcom()  { git add . && git commit -m "$1"; }
 lazy()  { git add . && git commit -m "$1" && git push; }
 gclean(){ git fetch -p && git branch --merged | grep -E -v '(^\*|main|master|dev)' | xargs -r git branch -d; }
+
+# ===== Functions: Project =====
+cleanb(){ rm -rf .next .astro .svelte-kit node_modules/.cache kiro-cli 2>/dev/null; echo "build artifacts removed"; }
 
 # ===== Functions: FZF =====
 if has fzf && has fd; then
