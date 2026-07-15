@@ -41,6 +41,7 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 has starship && eval "$(starship init bash)"
 has zoxide  && eval "$(zoxide init bash)"
 has atuin   && eval "$(atuin init bash)"
+[[ -r "$HOME/.grok/completions/bash/grok.bash" ]] && source "$HOME/.grok/completions/bash/grok.bash"
 
 # ===== Startup =====
 has fastfetch && fastfetch
@@ -86,8 +87,7 @@ alias free='free -h'
 has procs  && alias ps='procs'  || alias ps='ps auxf'
 alias psg='ps aux | grep'
 has rg     && alias rg='rg -S'
-has htop   && alias top='htop'
-has btm    && alias top='btm'
+has btm    && alias top='btm' || has htop && alias top='htop'
 has doggo  && alias dig='doggo'
 has tldr   && alias help='tldr'
 has http   && alias https='http'
@@ -171,4 +171,4 @@ fi
 
 # ===== Misc =====
 alias stripe='docker run --rm -it -v "$HOME/.config/stripe:/root/.config/stripe" -v "$HOME/.stripe:/root/.stripe" stripe/stripe-cli:latest'
-. "$HOME/.local/share/../bin/env"
+. "$HOME/.local/bin/env"
