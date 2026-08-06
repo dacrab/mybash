@@ -31,6 +31,7 @@ export EDITOR="nvim" VISUAL="nvim"
 has bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export PATH="$HOME/.local/bin:$PATH"
+[[ -f "$HOME/.atuin/bin/env" ]] && source "$HOME/.atuin/bin/env"
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
@@ -44,6 +45,7 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 has starship && eval "$(starship init bash)"
 has zoxide  && eval "$(zoxide init bash)"
 has atuin   && eval "$(atuin init bash)"
+has direnv  && eval "$(direnv hook bash)"
 [[ -r "$HOME/.grok/completions/bash/grok.bash" ]] && source "$HOME/.grok/completions/bash/grok.bash"
 
 # ===== Startup =====
@@ -135,6 +137,10 @@ alias gstash='git stash'
 alias gstashp='git stash pop'
 alias gprune='git fetch --prune'
 alias guncommit='git reset --soft HEAD~1'
+alias gundo='git restore .'
+alias gpf='git push --force-with-lease'
+alias gwip='git add -A && git commit -m "WIP"'
+alias gunwip='git log -1 --oneline | grep -q WIP && git reset --soft HEAD~1'
 
 # ===== Aliases: Docker =====
 alias d='docker'
@@ -146,6 +152,11 @@ alias dcd='docker compose down'
 alias dcb='docker compose build'
 alias dcl='docker compose logs -f'
 alias dexec='docker exec -it'
+
+# ===== Aliases: New Tools =====
+has lazygit && alias lg='lazygit'
+has yt-dlp  && alias yt='yt-dlp'
+has yt-dlp  && alias yta='yt-dlp -x --audio-format mp3'
 
 # ===== Aliases: Scripts =====
 alias update='bash "$HOME/.local/bin/update.sh"'
