@@ -1,31 +1,28 @@
 # mybash
 
-Bash configuration (.bashrc, .bash_profile) and Starship prompt, managed as a git submodule of [dacrab/dotfiles](https://github.com/dacrab/dotfiles).
+My personal Bash setup — shell configuration and a Starship prompt. It's a git submodule of [dacrab/dotfiles](https://github.com/dacrab/dotfiles).
 
-## Structure
+## What's inside
 
-```
-mybash/
-├── .bashrc              # Main bash configuration
-├── .bash_profile        # Login shell setup
-├── .config/
-│   └── starship/
-│       └── starship.toml
-└── README.md
-```
+| File | Purpose |
+|------|---------|
+| `.bashrc` | Main shell setup: aliases, functions, init hooks (starship, zoxide, atuin, direnv, fzf) |
+| `.bash_profile` | Login shell entry point, loads `.profile` and `.bashrc` |
+| `.profile` | Environment setup for non-Bash logins |
+| `.config/starship/starship.toml` | The prompt theme |
 
 ## Install
 
 ```bash
+cd ~/dotfiles
 stow mybash
 ```
 
-## Updating
+## Update
 
 ```bash
-cd ~/dotfiles/mybash && git pull
+cd ~/dotfiles/mybash
+git pull
 ```
-
-## Original repo
 
 Maintained at [dacrab/mybash](https://github.com/dacrab/mybash).
