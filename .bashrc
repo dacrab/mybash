@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# ============================================
+# .bashrc — interactive bash configuration.
+# Shell behavior, environment, aliases, fzf.
+# ============================================
 [[ $- != *i* ]] && return
 
 has() { command -v "$1" &>/dev/null; }
@@ -27,7 +31,6 @@ export EDITOR="nvim" VISUAL="nvim"
 has bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export PATH="$HOME/.local/bin:$PATH"
-[[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
@@ -175,16 +178,15 @@ gclean(){ git fetch -p && git branch --merged | grep -E -v '(^\*|main|master|dev
 fbr()   { git branch -a --format '%(refname:short)' | fzf | xargs git checkout; }
 
 # ===== Functions: Project =====
-cleanb(){ rm -rf .next .astro .svelte-kit node_modules/.cache kiro-cli 2>/dev/null; echo "build artifacts removed"; }
+cleanb(){ rm -rf .next .astro .svelte-kit node_modules/.cache 2>/dev/null; echo "build artifacts removed"; }
 
 # ===== Functions: FZF =====
 if has fzf && has fd; then
   fe()   { local f; f=$(fd --type f --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0) && ${EDITOR:-nvim} "$f"; }
-  fcd()  { local d; d=$(fd --type d --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0) && cd "$d"; }
+  fcd()  { local d; d=$(fd --type d --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0) && cd "$d" || return; }
   fkill(){ local p; p=$(ps -ef | sed 1d | fzf -m | awk '{print $2}') && echo "$p" | xargs kill -"${1:-9}"; }
   fshow(){ local f; f=$(fd --type f --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0 --preview "bat --color=always --style=numbers --line-range=:500 {}") && bat "$f"; }
 fi
 
 # ===== Misc =====
 alias stripe='docker run --rm -it -v "$HOME/.config/stripe:/root/.config/stripe" -v "$HOME/.stripe:/root/.stripe" stripe/stripe-cli:latest'
-. "$HOME/.local/bin/env"
