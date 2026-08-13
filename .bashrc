@@ -7,7 +7,7 @@
 
 has() { command -v "$1" &>/dev/null; }
 
-# ===== Shell Behavior =====
+# ----- Shell Behavior -----
 [[ -f /etc/bashrc ]] && source /etc/bashrc
 [[ -f /usr/share/bash-completion/bash_completion ]] && source /usr/share/bash-completion/bash_completion
 
@@ -21,7 +21,7 @@ export HISTTIMEFORMAT="%F %T "
 export HISTCONTROL="erasedups:ignoredups:ignorespace"
 PROMPT_COMMAND="history -a"
 
-# ===== Environment =====
+# ----- Environment -----
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
@@ -31,7 +31,7 @@ export EDITOR="nvim" VISUAL="nvim"
 has bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export PATH="$HOME/.local/bin:$PATH"
-[[ -f "$HOME/.atuin/bin/env" ]] && source "$HOME/.atuin/bin/env"
+[[ -f "$HOME/.atuin/bin/env" ]] && ! has atuin && source "$HOME/.atuin/bin/env"
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
@@ -39,7 +39,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
-# ===== Init Hooks =====
+# ----- Init Hooks -----
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 [[ -f "$HOME/.fzf.bash" ]] && source "$HOME/.fzf.bash" && export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
 has starship && eval "$(starship init bash)"
@@ -48,10 +48,14 @@ has atuin   && eval "$(atuin init bash)"
 has direnv  && eval "$(direnv hook bash)"
 [[ -r "$HOME/.grok/completions/bash/grok.bash" ]] && source "$HOME/.grok/completions/bash/grok.bash"
 
-# ===== Startup =====
+# ----- Startup -----
 has fastfetch && fastfetch
 
-# ===== Aliases: Files & Navigation =====
+# ----- Directories (override via env) -----
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
+DEV_DIR="${DEV_DIR:-$HOME/Documents/GitHub}"
+
+# ----- Aliases: Files & Navigation -----
 has wl-copy && alias copy='wl-copy' && alias paste='wl-paste'
 has eza && {
   alias ls='eza -a -1 --icons --group-directories-first'
@@ -68,26 +72,26 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias c='clear'
 alias h='history'
-alias path='echo -e "${PATH//:/\\n}"'
+alias path='printf "%s\n" "${PATH//:/$'\''\n'\''}"'
 alias reload='source ~/.bashrc'
-alias eb='$EDITOR ~/dotfiles/mybash/.bashrc'
-alias eg='$EDITOR ~/dotfiles/git-stow/.gitconfig'
-alias dot='cd ~/dotfiles'
-alias dev='cd ~/Documents/GitHub'
+alias eb='$EDITOR "$DOTFILES_DIR/mybash/.bashrc"'
+alias eg='$EDITOR "$DOTFILES_DIR/git-stow/.gitconfig"'
+alias dot='cd "$DOTFILES_DIR"'
+alias dev='cd "$DEV_DIR"'
 
-# ===== Aliases: File Safety =====
+# ----- Aliases: File Safety -----
 alias cp='cp -i'
 alias mv='mv -i'
 has trash && alias rm='trash' || alias rm='rm -i'
 alias mkdir='mkdir -pv'
 
-# ===== Aliases: Text & Editors =====
+# ----- Aliases: Text & Editors -----
 has nvim && { alias vim='nvim'; alias vi='nvim'; }
 alias tree='tree -C'
 alias untar='tar -xvf'
 alias targz='tar -czvf'
 
-# ===== Aliases: System =====
+# ----- Aliases: System -----
 has duf    && alias df='duf'    || alias df='df -h'
 has dust   && alias du='dust'   || alias du='du -h'
 alias free='free -h'
@@ -106,7 +110,7 @@ alias jc='journalctl'
 alias py='python3'
 alias diff='diff --color=auto'
 
-# ===== Aliases: Network =====
+# ----- Aliases: Network -----
 has ss && alias ports='ss -tulpen'
 alias ip='ip -c'
 alias ping='ping -c 5'
@@ -116,7 +120,7 @@ alias ippublic='curl -s https://ifconfig.me'
 alias serve='python3 -m http.server 8000'
 alias weather='curl -s "wttr.in?m"'
 
-# ===== Aliases: Git =====
+# ----- Aliases: Git -----
 alias g='git'
 alias gs='git status'
 alias gst='git status -sb'
@@ -142,7 +146,7 @@ alias gpf='git push --force-with-lease'
 alias gwip='git add -A && git commit -m "WIP"'
 alias gunwip='git log -1 --oneline | grep -q WIP && git reset --soft HEAD~1'
 
-# ===== Aliases: Docker =====
+# ----- Aliases: Docker -----
 alias d='docker'
 alias dc='docker compose'
 alias dps='docker ps'
@@ -153,17 +157,17 @@ alias dcb='docker compose build'
 alias dcl='docker compose logs -f'
 alias dexec='docker exec -it'
 
-# ===== Aliases: New Tools =====
+# ----- Aliases: New Tools -----
 has lazygit && alias lg='lazygit'
 has yt-dlp  && alias yt='yt-dlp'
 has yt-dlp  && alias yta='yt-dlp -x --audio-format mp3'
 
-# ===== Aliases: Scripts =====
-alias update='bash "$HOME/.local/bin/update.sh"'
-alias sweep='bash "$HOME/.local/bin/sweep.sh"'
-alias wall='bash "$HOME/.local/bin/random-wall.sh"'
+# ----- Aliases: Scripts -----
+alias update='update.sh'
+alias sweep='sweep.sh'
+alias wall='random-wall.sh'
 
-# ===== Aliases: JS/TS (bun preferred, npm fallback) =====
+# ----- Aliases: JS/TS (bun preferred, npm fallback) -----
 has bun && {
   alias ni='bun install'
   alias nadd='bun add'
@@ -176,28 +180,35 @@ has bun && {
   alias nr='npm run'
 }
 
-# ===== Aliases: Supabase =====
+# ----- Aliases: Supabase -----
 has supabase && {
   alias supau='supabase start'
   alias supad='supabase stop --all'
 }
 
-# ===== Functions: Git =====
+# ----- Functions: Git -----
 gcom()  { git add . && git commit -m "$1"; }
 lazy()  { git add . && git commit -m "$1" && git push; }
-gclean(){ git fetch -p && git branch --merged | grep -E -v '(^\*|main|master|dev)' | xargs -r git branch -d; }
-fbr()   { git branch -a --format '%(refname:short)' | fzf | xargs git checkout; }
+gclean(){
+  git fetch -p
+  local b
+  while read -r b; do
+    [[ "$b" == "*"* || "$b" == main || "$b" == master || "$b" == dev ]] && continue
+    git branch -d "$b" 2>/dev/null
+  done < <(git branch --merged)
+}
+fbr()   { local b; b=$(git branch -a --format '%(refname:short)' | fzf) && [[ -n "$b" ]] && git checkout "$b"; }
 
-# ===== Functions: Project =====
+# ----- Functions: Project -----
 cleanb(){ rm -rf .next .astro .svelte-kit node_modules/.cache 2>/dev/null; echo "build artifacts removed"; }
 
-# ===== Functions: FZF =====
+# ----- Functions: FZF -----
 if has fzf && has fd; then
   fe()   { local f; f=$(fd --type f --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0) && ${EDITOR:-nvim} "$f"; }
   fcd()  { local d; d=$(fd --type d --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0) && cd "$d" || return; }
-  fkill(){ local p; p=$(ps -ef | sed 1d | fzf -m | awk '{print $2}') && echo "$p" | xargs kill -"${1:-9}"; }
+  fkill(){ local p; p=$(ps -eo pid=,comm= | fzf -m) && [[ -n "$p" ]] && while read -r pid _; do kill -"${1:-9}" "$pid"; done <<< "$p"; }
   fshow(){ local f; f=$(fd --type f --hidden --exclude .git | fzf --query="$1" --select-1 --exit-0 --preview "bat --color=always --style=numbers --line-range=:500 {}") && bat "$f"; }
 fi
 
-# ===== Misc =====
+# ----- Misc -----
 alias stripe='docker run --rm -it -v "$HOME/.config/stripe:/root/.config/stripe" -v "$HOME/.stripe:/root/.stripe" stripe/stripe-cli:latest'
