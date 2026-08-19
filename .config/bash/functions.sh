@@ -1,5 +1,16 @@
 # shellcheck shell=bash
 # ----- Functions -----
+# y - open yazi, cd to the directory you left off in.
+y() {
+  local tmp cwd
+  tmp="$(mktemp -t yazi-cwd.XXXXXX)"
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then
+    builtin cd -- "$cwd" || return
+  fi
+  rm -f -- "$tmp"
+}
+
 # Run `aliases` for a text list; it also syncs the `navi` cheat sheet.
 aliases() {
   local sheet="$HOME/.local/share/navi/cheats/aliases.cheat"

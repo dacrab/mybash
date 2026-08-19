@@ -42,7 +42,7 @@ alias wget='wget -c'
 alias curl='curl -L'
 
 # ----- Aliases: Scripts -----
-alias update='update.sh'
+alias update='topgrade'
 alias sweep='sweep.sh'
 
 # ----- Aliases: Dev Tools -----
