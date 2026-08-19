@@ -1,0 +1,5 @@
+# navi cheatsheet paths (see `navi info config-example`)
+cheats:
+  paths:
+    - ~/.config/navi/cheats
+    - ~/.local/share/navi/cheats

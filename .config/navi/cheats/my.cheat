@@ -1,0 +1,37 @@
+; Personal cheatsheet — commands you keep forgetting.
+;
+; navi syntax:
+;   % tags       starts a section (searchable)
+;   # description  shown in the picker
+;   $ var: cmd     command that suggests values for <var>
+;   ; comment      ignored by navi
+;
+; Add your own below.
+
+% git
+# Clone a repo from GitHub
+gh repo clone <repo>
+
+$ repo: gh repo list --limit 100 --json name --jq '.[].name'
+
+% dev
+# Run the dev server
+bun dev
+# Commit everything and push
+git add -A && git commit -m "<message>" && git push
+
+% supabase
+# Start the local stack
+supabase start
+# Stop the local stack
+supabase stop --all
+# Reset the database
+supabase db reset
+
+% system
+# Container resource usage
+docker stats
+
+% android
+# Shell into a connected device
+adb shell

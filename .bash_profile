@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck shell=bash
-# ============================================
-# .bash_profile — login shell setup.
-# Sources .profile (env/cargo) and .bashrc.
-# ============================================
+# shellcheck shell=bash source=/dev/null
+# .bash_profile — sources .profile and .bashrc.
 [[ -f "$HOME/.profile" ]] && . "$HOME/.profile"
 [[ -n $BASH && $- == *i* && -f "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
