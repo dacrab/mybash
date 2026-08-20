@@ -32,6 +32,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 [[ -d "$HOME/.spicetify" ]] && export PATH="$HOME/.spicetify:$PATH"
 
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+[[ -f "$HOME/.atuin/bin/env" ]] && . "$HOME/.atuin/bin/env"
 
 # ----- Directories (override via env) -----
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
