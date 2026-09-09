@@ -6,3 +6,5 @@
 for f in "$HOME/.config/bash"/{env,aliases,functions,hooks}.sh; do
   [[ -f "$f" ]] && source "$f"
 done
+
+. "$HOME/.local/share/../bin/env"
