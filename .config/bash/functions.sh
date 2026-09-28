@@ -2,19 +2,25 @@
 # ----- Functions -----
 # y - open yazi, cd to the directory you left off in.
 y() {
-  local tmp cwd
-  tmp="$(mktemp -t yazi-cwd.XXXXXX)"
+  local tmp cwd status
+  tmp="$(mktemp -t yazi-cwd.XXXXXX)" || return
   yazi "$@" --cwd-file="$tmp"
+  status=$?
   if cwd="$(command cat -- "$tmp")" && [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then
-    builtin cd -- "$cwd" || return
+    builtin cd -- "$cwd" || status=$?
   fi
-  rm -f -- "$tmp"
+  command rm -f -- "$tmp"
+  return "$status"
+}
+
+ai() {
+  command opencode --auto "$@"
 }
 
 # Run `aliases` for a text list; it also syncs the `navi` cheat sheet.
 aliases() {
   local sheet="$HOME/.local/share/navi/cheats/aliases.cheat"
-  mkdir -p "${sheet%/*}"
+  command mkdir -p "${sheet%/*}"
   awk -v sheet="$sheet" '
     /^# -----/ { sub(/^# ----- /, ""); sub(/ -----$/, ""); sec = $0; shown = 0; next }
     {

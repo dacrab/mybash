@@ -9,7 +9,7 @@ My personal Bash setup — shell config plus a Starship prompt. It's part of [da
 | `.bashrc` | Thin entry point; loads the files below |
 | `.config/bash/env.sh` | History, folder locations, PATH, default editor |
 | `.config/bash/aliases.sh` | All shell shortcuts (`ls`, `cat`, `update`, ...) |
-| `.config/bash/functions.sh` | The `aliases` command — prints your shortcuts and keeps the navi cheatsheet in sync |
+| `.config/bash/functions.sh` | Shell functions: `y`, `ai`, and the `aliases` command |
 | `.config/bash/hooks.sh` | Starts shell tools (prompt, zoxide, atuin, fzf) |
 | `.config/navi/config.yaml` | Where navi looks for cheatsheets |
 | `.config/navi/cheats/my.cheat` | Your personal cheatsheet — add commands you keep forgetting |
@@ -20,6 +20,8 @@ My personal Bash setup — shell config plus a Starship prompt. It's part of [da
 ## Shortcuts
 
 Run `aliases` any time for a grouped list of your shortcuts, or `navi` to browse them interactively. The list stays in sync automatically whenever `aliases.sh` changes.
+
+`ai` launches OpenCode with `--auto`; `y` opens Yazi and changes to its last directory.
 
 ## Install
 

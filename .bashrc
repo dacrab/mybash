@@ -4,7 +4,10 @@
 [[ $- != *i* ]] && return
 
 for f in "$HOME/.config/bash"/{env,aliases,functions,hooks}.sh; do
-  [[ -f "$f" ]] && source "$f"
+  [[ -r "$f" ]] && source "$f"
 done
 
-. "$HOME/.local/share/../bin/env"
+# API keys (untracked)
+[[ -r "$HOME/.secrets.env" ]] && . "$HOME/.secrets.env"
+
+. "$HOME/.local/bin/env"

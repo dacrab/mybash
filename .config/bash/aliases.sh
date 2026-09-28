@@ -19,7 +19,7 @@ alias mkdir='mkdir -pv'
 
 # ----- Aliases: Text & Editors -----
 has nvim && { alias vim='nvim'; alias vi='nvim'; }
-alias tree='tree -C'
+has tree  && alias tree='tree -C'
 
 # ----- Aliases: System -----
 has duf    && alias df='duf'
@@ -42,12 +42,11 @@ alias wget='wget -c'
 alias curl='curl -L'
 
 # ----- Aliases: Scripts -----
-alias update='topgrade'
-alias sweep='sweep.sh'
+has topgrade && alias update='topgrade'
 
 # ----- Aliases: Dev Tools -----
-alias gcl='gh repo clone'
-alias adbsh='adb shell'
+has gh  && alias gcl='gh repo clone'
+has adb && alias adbsh='adb shell'
 
 # ----- Misc -----
-alias stripe='docker run --rm -it -v "$HOME/.config/stripe:/root/.config/stripe" -v "$HOME/.stripe:/root/.stripe" stripe/stripe-cli:latest'
+has docker && alias stripe='docker run --rm -it -v "$HOME/.config/stripe:/root/.config/stripe" -v "$HOME/.stripe:/root/.stripe" stripe/stripe-cli:latest'

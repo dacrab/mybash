@@ -14,26 +14,30 @@ stty -ixon 2>/dev/null
 export HISTSIZE=10000 HISTFILESIZE=20000
 export HISTTIMEFORMAT="%F %T "
 export HISTCONTROL="erasedups:ignoredups:ignorespace"
-PROMPT_COMMAND="history -a"
+# NOTE: `history -a` is appended to PROMPT_COMMAND at the end of hooks.sh,
+# after the tool inits (atuin/starship/zoxide/direnv) have set it up.
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
-export EDITOR="nvim" VISUAL="nvim"
+if has nvim; then
+  export EDITOR="${EDITOR:-nvim}"
+  export VISUAL="${VISUAL:-$EDITOR}"
+fi
 has bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-export PATH="$HOME/.local/bin:$PATH"
-[[ -d "$HOME/go/bin" ]] && export PATH="$HOME/go/bin:$PATH"
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
-export PATH="$BUN_INSTALL/bin:$PATH"
-[[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
-[[ -d "$HOME/.spicetify" ]] && export PATH="$HOME/.spicetify:$PATH"
+# Listed lowest-priority first: each entry is prepended, so ~/.local/bin wins.
+for dir in "$HOME/.spicetify" "$HOME/.opencode/bin" "$BUN_INSTALL/bin" "$HOME/go/bin" "$HOME/.local/bin"; do
+  [[ -d "$dir" ]] || continue
+  [[ ":$PATH:" == *":$dir:"* ]] || export PATH="$dir${PATH:+:$PATH}"
+done
 
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 [[ -f "$HOME/.atuin/bin/env" ]] && . "$HOME/.atuin/bin/env"
 
 # ----- Directories (override via env) -----
-DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
-DEV_DIR="${DEV_DIR:-$HOME/Documents/GitHub}"
+export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
+export DEV_DIR="${DEV_DIR:-$HOME/Documents/GitHub}"
