@@ -14,14 +14,11 @@ add_newline = false
 
 [username]
 show_always = true
-# User: Nord Dark BG (#2E3440), Snow (#D8DEE9)
-style_user = "bg:#2E3440 fg:#D8DEE9"
-# Root: Nord Orange (#D08770), Dark BG (#2E3440)
-style_root = "bg:#D08770 fg:#2E3440"
+style_user = "bg:#2E3440 fg:#D8DEE9" # snow on dark
+style_root = "bg:#D08770 fg:#2E3440" # orange on dark
 format = '[ $user ]($style)'
 
 [directory]
-# Directory: Nord Medium BG (#3B4252), Snow (#D8DEE9)
 style = "bg:#3B4252 fg:#D8DEE9"
 format = "[ $path ]($style)"
 truncation_length = 3
@@ -36,23 +33,18 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-# Git Branch: Nord Light BG (#434C5E), Yellow (#EBCB8B)
 style = "bg:#434C5E fg:#EBCB8B"
 format = '[ $symbol $branch ]($style)'
 
 [git_status]
-# Git Status: Nord Light BG (#434C5E), Green (#A3BE8C)
 style = "bg:#434C5E fg:#A3BE8C"
 format = '[$all_status$ahead_behind ]($style)'
 
 [python]
-# Python: Nord Dark BG (#2E3440), Frost (#8FBCBB)
 style = "bg:#2E3440 fg:#8FBCBB"
 format = '[(\($virtualenv\) )]($style)'
 
 [time]
-disabled = false
-time_format = "%R" # Hour:Minute Format
-# Time: Nord Cyan BG (#88C0D0), Dark BG (#2E3440)
+time_format = "%R" # hour:minute
 style = "bg:#88C0D0 fg:#2E3440"
 format = '[ $time ]($style)'
