@@ -1,5 +1,4 @@
 # shellcheck shell=bash source=/dev/null
-# ----- Init Hooks -----
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --exclude .git'
 has fzf       && eval "$(fzf --bash)"
@@ -18,5 +17,4 @@ else
     || PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;}history -a"
 fi
 
-# ----- Startup -----
 has fastfetch && fastfetch

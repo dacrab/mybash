@@ -1,8 +1,6 @@
 # shellcheck shell=bash source=/dev/null
-# ----- Environment -----
 has() { command -v "$1" &>/dev/null; }
 
-# ----- Shell Behavior -----
 [[ -f /etc/bashrc ]] && source /etc/bashrc
 [[ -f /usr/share/bash-completion/bash_completion ]] && source /usr/share/bash-completion/bash_completion
 
@@ -38,6 +36,5 @@ done
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 [[ -f "$HOME/.atuin/bin/env" ]] && . "$HOME/.atuin/bin/env"
 
-# ----- Directories (override via env) -----
 export DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
 export DEV_DIR="${DEV_DIR:-$HOME/Documents/GitHub}"

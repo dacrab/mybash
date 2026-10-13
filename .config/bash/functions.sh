@@ -1,6 +1,5 @@
 # shellcheck shell=bash
-# ----- Functions -----
-# y - open yazi, cd to the directory you left off in.
+# y: open yazi and cd to the directory it was left in.
 y() {
   local tmp cwd status
   tmp="$(mktemp -t yazi-cwd.XXXXXX)" || return

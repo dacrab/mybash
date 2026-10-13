@@ -29,7 +29,6 @@ truncation_symbol = "…/"
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
-# Order matters: substitute longer paths first to avoid partial matches
 
 [git_branch]
 symbol = ""
