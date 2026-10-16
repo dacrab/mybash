@@ -10,3 +10,5 @@ done
 [[ -r "$HOME/.secrets.env" ]] && . "$HOME/.secrets.env"
 
 . "$HOME/.local/bin/env"
+
+export GOTOOLCHAIN=auto
