@@ -28,7 +28,7 @@ has bat && export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
 # Listed lowest-priority first: each entry is prepended, so ~/.local/bin wins.
-for dir in "$HOME/.spicetify" "$HOME/.opencode/bin" "$BUN_INSTALL/bin" "$HOME/go/bin" "$HOME/.local/bin"; do
+for dir in "$HOME/.spicetify" "$BUN_INSTALL/bin" "$HOME/go/bin" "$HOME/.local/bin"; do
   [[ -d "$dir" ]] || continue
   [[ ":$PATH:" == *":$dir:"* ]] || export PATH="$dir${PATH:+:$PATH}"
 done
