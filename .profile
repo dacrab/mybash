@@ -6,3 +6,5 @@
 
 # Lives outside the repo; never commit it.
 [[ -r "$HOME/.secrets.env" ]] && . "$HOME/.secrets.env"
+
+. "$HOME/.local/share/../bin/env"
