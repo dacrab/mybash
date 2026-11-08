@@ -1,6 +1,6 @@
 # mybash
 
-My personal Bash setup — shell config plus a Starship prompt. It's part of [dacrab/dotfiles](https://github.com/dacrab/dotfiles), where it lives as a linked sub-repo.
+My personal Bash setup — shell config plus a Starship prompt. It's part of [dacrab/dotfiles](https://github.com/dacrab/dotfiles), where it lives as a git submodule.
 
 ## What's inside
 

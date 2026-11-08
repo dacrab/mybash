@@ -12,5 +12,3 @@ done
 . "$HOME/.local/bin/env"
 
 export GOTOOLCHAIN=auto
-
-. "$HOME/.local/share/../bin/env"
