@@ -46,6 +46,7 @@ has topgrade && alias update='topgrade'
 
 # ----- Aliases: Dev Tools -----
 has gh  && alias gcl='gh repo clone'
+has opencode && alias ai='opencode --auto'
 has adb && alias adbsh='adb shell'
 
 # ----- Misc -----
